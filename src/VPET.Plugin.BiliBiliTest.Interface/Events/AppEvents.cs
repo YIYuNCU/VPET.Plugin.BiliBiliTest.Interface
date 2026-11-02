@@ -15,14 +15,14 @@ namespace VPET.Evian.BiliBiliTest.Core.Events
     }
 
     /// <summary>
-    /// 礼物/点赞批次：LiveSession 每隔固定时间把期间的礼物与点赞合并后发布一次
+    /// 礼物/点赞批次：宿主每隔固定时间把期间的礼物与点赞合并后发布一次
     /// </summary>
     public sealed class GiftBatchEvent
     {
         public List<Gift> Gifts { get; set; } = new();
     }
 
-    /// <summary>请桌宠说一句话。由主程序的朗读队列（SpeechService）消费，插件需要说话时发布此事件，不依赖其他插件</summary>
+    /// <summary>请桌宠说一句话。由主程序的朗读队列消费，插件需要说话时发布此事件，不依赖其他插件</summary>
     public sealed class SpeakRequestEvent
     {
         public string Content { get; set; } = "";

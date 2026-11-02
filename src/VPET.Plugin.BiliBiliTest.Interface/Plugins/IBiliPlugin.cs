@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace VPET.Evian.BiliBiliTest.Core
 {
     /// <summary>
-    /// 插件接入入口。实现该接口（通常继承 <see cref="BiliPluginBase"/>），编译成 dll 后放到 mod 目录的 Plugins 文件夹，
+    /// 插件接入入口。实现该接口（通常继承 <see cref="BiliPluginBase"/>），编译成 dll 后放到 mod 目录的 SubPlugins/&lt;插件名&gt;/ 文件夹，
     /// 宿主启动时自动加载其中所有公开、非抽象、有公开无参构造的实现类。每次启用插件都会重新创建一个实例。
     /// <para>
     /// 生命周期（宿主按此顺序调用）：Initialize → [IPluginSettings.LoadSettings] → [IPluginSaveData.LoadData] → Start
@@ -83,7 +83,7 @@ namespace VPET.Evian.BiliBiliTest.Core
     {
         public string Header { get; }
         public UserControl Content { get; }
-        /// <summary>点击“保存设置”时调用，把界面内容写回插件</summary>
+        /// <summary>点击设置窗口的“确定”或“应用”时调用，把界面内容写回插件</summary>
         public Action? Apply { get; }
         /// <summary>页面自己带滚动条(如表格)：设置窗口不再给它套外层滚动条，而是把可用高度全给它</summary>
         public bool Fill { get; init; }

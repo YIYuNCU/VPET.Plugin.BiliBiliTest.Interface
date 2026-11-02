@@ -1,6 +1,6 @@
 namespace VPET.Evian.BiliBiliTest.Core.Events
 {
-    // 直播间事件：由 LiveSession 把 B 站 SDK 数据转换后发布。插件只依赖这些类型，不直接依赖 SDK。
+    // 直播间事件：由宿主把 B 站 SDK 数据转换后发布。插件只依赖这些类型，不直接依赖 SDK。
 
     /// <summary>与某个观众有关的事件</summary>
     public abstract class UserEvent

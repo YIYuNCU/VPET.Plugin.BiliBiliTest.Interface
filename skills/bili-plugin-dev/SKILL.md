@@ -9,7 +9,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 
 - 接口文档里没写的行为，不要靠猜测写进代码。能通过接口类型的 XML 注释（编译后随程序集提供的 `.xml`）确认的再用；确认不了的，告诉用户“这一点接口文档没有说明，需要在实机上验证”，并在插件 README 里记下来。
 - 不要去找或假设内置插件（读弹幕、好感度、投喂等）的内部类型。内置插件只能通过事件交互，事件和字段见接口文档。
-- 先读 [docs/plugin-api.md](../../docs/plugin-api.md)（生命周期、事件、优先级、文件位置、金额单位），再看 [samples/EchoSample](../../samples/EchoSample) 的完整示例，然后动手。
+- 先读 [docs/plugin-api.md](../../docs/plugin-api.md)（生命周期、基类、设置、存档、文件位置、金额单位）和 [docs/events.md](../../docs/events.md)（事件、字段、优先级），新手可以先跟着 [docs/getting-started.md](../../docs/getting-started.md) 做一遍，再看 [samples/EchoSample](../../samples/EchoSample) 的完整示例，然后动手。
 
 ## 新建插件工程
 
@@ -59,7 +59,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 2. 要消费弹幕指令：优先级取 1 到 99，匹配后置 `Handled = true`，并在处理前检查 `Handled`。再用 `BlockedWordsRequestEvent` 把指令词交给读弹幕插件屏蔽，订阅 `BlockedWordsResendEvent` 在读弹幕插件重启后重发。
 3. 要说话：发布 `SpeakRequestEvent`（设 `Content` 和 `Type`），不要自己操作气泡。
 4. 要观众的好感度、金钱、舰长类型：发布 `UserProfileQuery`，读结果前检查 `Answered`。要增减金钱：发布 `UserMoneyAdjustEvent`。
-5. 优先级表在接口文档“处理器优先级”，选值前先看，不要和内置插件抢同一个位置。
+5. 优先级表在 [docs/events.md](../../docs/events.md#处理器优先级)，选值前先看，不要和内置插件抢同一个位置。
 
 ## 约定
 
@@ -89,7 +89,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 
 ## 部署和调试
 
-1. `dotnet build -c Release`，把输出里**自己的 dll**（不含接口程序集、LinePutScript、VPet 的 dll）复制到 mod 目录的 `Plugins` 文件夹；没有这个文件夹就新建。
+1. `dotnet build -c Release`，把输出里**自己的 dll**（不含接口程序集、LinePutScript、VPet 的 dll）复制到 mod 目录的 `SubPlugins/<插件名>/` 文件夹（每个插件一个子文件夹，没有就新建；直接放在 `SubPlugins` 根目录的 dll 不会加载）。插件自己的第三方依赖 dll 和说明文档也放在这个子文件夹里。
 2. 重启桌宠。设置窗口左侧导航会出现新插件的页签，“基本设置”里能看到它的启用开关。
 3. 看日志：`<游戏目录>/ModData/BiliVpet/Log/<LogTitle>/` 是插件自己的日志，`Log/Main/` 是宿主日志，插件没加载出来时看这里的“加载外部插件...失败”。
 4. 没有真实直播时，可以在设置窗口里启用插件、检查设置页和存档；事件逻辑要么开播测试，要么在自己的单元测试里直接 `new EventBus(...)` 发布事件验证。
@@ -103,7 +103,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 
 ## 本 skill 依赖的接口仓库位置
 
-修改下面任一位置后，必须回来检查本 skill 和 [docs/plugin-api.md](../../docs/plugin-api.md) 是否仍然准确：
+修改下面任一位置后，必须回来检查本 skill、[docs/plugin-api.md](../../docs/plugin-api.md)、[docs/events.md](../../docs/events.md)、[docs/getting-started.md](../../docs/getting-started.md)、[docs/faq.md](../../docs/faq.md) 是否仍然准确，并在 [CHANGELOG.md](../../CHANGELOG.md) 记录变更：
 
 - `src/VPET.Plugin.BiliBiliTest.Interface/Plugins/`：`IBiliPlugin.cs`、`BiliPluginBase.cs`、`PluginContext.cs`、`ILiveSession.cs`
 - `src/VPET.Plugin.BiliBiliTest.Interface/Events/`：`EventBus.cs`、`PluginEvents.cs`、`LiveEvents.cs`、`AppEvents.cs`
