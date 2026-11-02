@@ -165,8 +165,9 @@ new SettingsPage("页签标题", userControl, apply)
 | 存档 | `Data/<插件Id>/`（`AppPaths.Data`，`LoadData` 直接给出） |
 | 日志 | `Log/<日志目录名>/`（`AppPaths.LogRoot`） |
 | 下载的资源 | `Resources/`（`AppPaths.Resources`） |
+| 外部插件 | `SubPlugins/<插件名>/`（`AppPaths.SubPlugins`），见“部署” |
 
-mod 目录（包含 `info.lps` 和 `plugin` 文件夹的那一层）只放随 mod 发布的只读内容，运行时往里写的文件可能被 mod 更新清掉。外部插件放在 mod 目录的 `SubPlugins/<插件名>/`，见“部署”。
+mod 目录（包含 `info.lps` 和 `plugin` 文件夹的那一层）只放随 mod 发布的只读内容，运行时往里写的文件可能被 mod 更新清掉，插件不要往里写。
 
 ## 金额单位
 
@@ -186,7 +187,7 @@ mod 目录（包含 `info.lps` 和 `plugin` 文件夹的那一层）只放随 mo
 
 ## 部署
 
-- 每个外部插件一个文件夹：`<mod 目录>/SubPlugins/<插件名>/`，把编译出的插件 dll 放在里面。宿主启动时扫描 `SubPlugins` 下每个子文件夹里的所有 `*.dll`，注册其中符合条件的类。直接放在 `SubPlugins` 根目录的 dll 不会加载；非托管 dll 会被跳过。
+- 每个外部插件一个文件夹：`<游戏主目录>/ModData/BiliVpet/SubPlugins/<插件名>/`（`AppPaths.SubPlugins`），把编译出的插件 dll 放在里面。用户可以在设置窗口“基本设置”页点“打开子插件文件夹”直接打开它。宿主启动时扫描 `SubPlugins` 下每个子文件夹里的所有 `*.dll`，注册其中符合条件的类；新增或删除子插件后需要重启桌宠。直接放在 `SubPlugins` 根目录的 dll 不会加载；非托管 dll 会被跳过。
 - 插件自己的第三方依赖 dll、说明文档、图片放在同一个子文件夹里。
 - 子文件夹里不要放接口程序集、`LinePutScript` 和 VPet 的 dll：宿主已经带了，复制进去没有用处，版本和宿主不同时还可能引起加载错误。示例工程用 `<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>` 和 `<Private>false</Private>` 保证输出里只有插件自己的 dll。
 - 加载失败（缺少依赖、类型不匹配等）会在主日志 `ModData/BiliVpet/Log/Main/` 里留下“加载外部插件...失败”的错误。排查方法见 [faq.md](faq.md)。

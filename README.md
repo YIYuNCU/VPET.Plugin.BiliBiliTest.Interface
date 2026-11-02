@@ -33,7 +33,7 @@ cd VPET.Plugin.BiliBiliTest.Interface/samples/EchoSample
 dotnet build -c Release
 ```
 
-把生成的 `EchoSample.dll` 复制到 mod 目录的 `SubPlugins/EchoSample/` 文件夹（每个插件一个子文件夹，没有就新建），重启桌宠。mod 目录是包含 `info.lps` 和 `plugin` 文件夹的那一层。设置窗口里会出现“回声示例”页，直播间观众发“回声 你好”，桌宠会说“<昵称>说：你好”。
+把生成的 `EchoSample.dll` 复制到 `<游戏主目录>/ModData/BiliVpet/SubPlugins/EchoSample/`（每个插件一个子文件夹，没有就新建），重启桌宠。打开 mod 设置窗口的“基本设置”页，点“打开子插件文件夹”可以直接打开 `SubPlugins`。设置窗口里会出现“回声示例”页，直播间观众发“回声 你好”，桌宠会说“<昵称>说：你好”。
 
 写自己的插件：复制 `samples/EchoSample` 改名，修改 `EchoPlugin.cs`，详细步骤见 [docs/getting-started.md](docs/getting-started.md)。
 

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace VPET.Evian.BiliBiliTest.Core
 {
     /// <summary>
-    /// 插件接入入口。实现该接口（通常继承 <see cref="BiliPluginBase"/>），编译成 dll 后放到 mod 目录的 SubPlugins/&lt;插件名&gt;/ 文件夹，
+    /// 插件接入入口。实现该接口（通常继承 <see cref="BiliPluginBase"/>），编译成 dll 后放到 MOD 存储目录的 SubPlugins/&lt;插件名&gt;/ 文件夹（ModData/BiliVpet/SubPlugins，见 <see cref="AppPaths.SubPlugins"/>），
     /// 宿主启动时自动加载其中所有公开、非抽象、有公开无参构造的实现类。每次启用插件都会重新创建一个实例。
     /// <para>
     /// 生命周期（宿主按此顺序调用）：Initialize → [IPluginSettings.LoadSettings] → [IPluginSaveData.LoadData] → Start

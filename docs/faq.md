@@ -6,7 +6,7 @@
 
 按下面的顺序检查：
 
-1. **位置不对**：dll 必须在 `<mod 目录>/SubPlugins/<插件名>/` 里。放在 `SubPlugins` 根目录、`plugin` 文件夹或旧的 `Plugins` 文件夹都不会加载。mod 目录是包含 `info.lps` 和 `plugin` 文件夹的那一层。
+1. **位置不对**：dll 必须在 `<游戏主目录>/ModData/BiliVpet/SubPlugins/<插件名>/` 里。放在 `SubPlugins` 根目录、mod 的 `plugin` 文件夹或旧版本约定的 mod 目录下的 `Plugins`、`SubPlugins` 文件夹都不会加载。用设置窗口“基本设置”页的“打开子插件文件夹”按钮可以直接打开这个目录。
 2. **类不符合条件**：必须 `public`、非抽象、有公开无参构造函数，并且实现了 `IBiliPlugin`（通常继承 `BiliPluginBase`）。
 3. **`Id` 重复**：和内置插件或别的外部插件重名时，后注册的被忽略，主日志里有“插件xxx重复注册，已忽略”。
 4. **加载出错**：日志里的“加载外部插件...失败:...”后面是异常信息，常见的有下面几种。
@@ -67,7 +67,7 @@
 mod 本体没有在所有环境下验证，下面这些外部插件相关的行为需要在实机上确认：
 
 - VPet 加载 mod 时的代码检测对插件自带资源的处理：示例插件没有 XAML，带 XAML（BAML 资源）的外部插件是否被拦截没有验证。
-- `SubPlugins` 在 mod 目录里。通过 Steam 创意工坊订阅安装的 mod，更新或“验证游戏文件完整性”时 Steam 是否清理里面的插件文件没有验证，建议备份自己的插件文件夹。
+- `SubPlugins` 在 `ModData/BiliVpet` 下，和设置、存档放在一起。VPet 的 MOD 存储目录是否随 Steam 云同步上传里面的 dll 没有验证。
 - 接口程序集 `VPET.Plugin.BiliBiliTest.Interface.dll` 必须和 mod 的 `BiliBiliTest.dll` 一起放在 `plugin` 文件夹。
 
 遇到问题请在本仓库提 Issue，或到 QQ 群 776377490 反馈，附上主日志的相关片段。

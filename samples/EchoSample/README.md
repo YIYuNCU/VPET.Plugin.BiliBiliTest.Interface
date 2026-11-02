@@ -20,7 +20,7 @@
 dotnet build -c Release
 ```
 
-把输出目录里的 `EchoSample.dll` 复制到 mod 目录的 `SubPlugins/EchoSample/`，重启桌宠。
+把输出目录里的 `EchoSample.dll` 复制到 `<游戏主目录>/ModData/BiliVpet/SubPlugins/EchoSample/`（设置窗口“基本设置”页的“打开子插件文件夹”按钮可以打开 `SubPlugins`），重启桌宠。
 
 输出目录里只有 `EchoSample.dll`，这是 `EchoSample.csproj` 里 `CopyLocalLockFileAssemblies=false` 和 `Private=false` 的效果：接口程序集、`LinePutScript`、VPet 的 dll 由 mod 提供，不需要复制。
 

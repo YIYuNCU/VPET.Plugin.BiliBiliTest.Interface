@@ -8,6 +8,7 @@ namespace VPET.Evian.BiliBiliTest.Core
     /// ModData/BiliVpet/Data/&lt;插件Id&gt;/...         各插件的存档
     /// ModData/BiliVpet/Log/&lt;日志名&gt;/...           日志
     /// ModData/BiliVpet/Resources/...             运行时下载的资源（礼物图标）
+    /// ModData/BiliVpet/SubPlugins/&lt;插件名&gt;/...  外部插件（dll、依赖、说明文档）
     /// </code>
     /// </summary>
     public static class AppPaths
@@ -20,5 +21,7 @@ namespace VPET.Evian.BiliBiliTest.Core
         public static string LogRoot => Path.Combine(UserRoot, "Log");
         /// <summary>运行时下载的资源（礼物图标缓存），不放在 mod 目录，避免被 mod 更新清掉</summary>
         public static string Resources => Path.Combine(UserRoot, "Resources");
+        /// <summary>外部插件目录：每个插件一个子文件夹 SubPlugins/&lt;插件名&gt;/，宿主启动时从这里加载插件。目录不一定存在，宿主在设置页的“打开文件夹”按钮里会创建</summary>
+        public static string SubPlugins => Path.Combine(UserRoot, "SubPlugins");
     }
 }

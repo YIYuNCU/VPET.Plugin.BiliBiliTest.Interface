@@ -69,7 +69,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 - 事件类型必须与订阅时的类型完全一致，总线不做继承匹配。
 - 构造函数里不做耗时或有副作用的事：宿主加载时会先创建一个备用实例。
 - 设置只在 `LoadSettings` 读、`SaveSettings` 写，只更新自己拥有的键。首次运行设置节是空的（`section.Count == 0`），默认值写在字段上，空节时 `LoadSettings` 直接返回。
-- 存档只在 `LoadData` 读、`SaveData` 写；运行时要写的文件都放在 `LoadData` 给的目录或 `AppPaths` 下，不要写进 mod 目录。
+- 存档只在 `LoadData` 读、`SaveData` 写；运行时要写的文件都放在 `LoadData` 给的目录或 `AppPaths` 下，不要写进 mod 目录和自己的 `SubPlugins/<插件名>` 文件夹。
 - 金额：事件里的价格是 1/1000 元（`1000 = 1 元`），设置页和播报用电池（`1 电池 = 100` 内部单位），换算用 `Currency`。`GiftEvent.Price` 是单价，总价是 `Price × GiftNum`。`SuperChatEvent.Rmb` 单位是元。
 - `OnShutdown` 必须释放自己创建的线程、任务、定时器、挂到主窗口的控件和事件、数据库连接。用户随时可能关闭再启用插件，再次启用是全新实例。
 - 碰桌宠（`Context.MainWindow`）：走游戏自己的流程，不要自己改存档字段，不要写 `Main.PlayingVoice`，不要强制 `Say`，界面线程上不做无超时的网络等待。
@@ -89,7 +89,7 @@ description: 为 VPet 的“B站直播互动” mod 开发外部插件时使用�
 
 ## 部署和调试
 
-1. `dotnet build -c Release`，把输出里**自己的 dll**（不含接口程序集、LinePutScript、VPet 的 dll）复制到 mod 目录的 `SubPlugins/<插件名>/` 文件夹（每个插件一个子文件夹，没有就新建；直接放在 `SubPlugins` 根目录的 dll 不会加载）。插件自己的第三方依赖 dll 和说明文档也放在这个子文件夹里。
+1. `dotnet build -c Release`，把输出里**自己的 dll**（不含接口程序集、LinePutScript、VPet 的 dll）复制到 `<游戏主目录>/ModData/BiliVpet/SubPlugins/<插件名>/`（每个插件一个子文件夹，没有就新建；直接放在 `SubPlugins` 根目录的 dll 不会加载；设置窗口“基本设置”页的“打开子插件文件夹”按钮可以打开 `SubPlugins`）。插件自己的第三方依赖 dll 和说明文档也放在这个子文件夹里。
 2. 重启桌宠。设置窗口左侧导航会出现新插件的页签，“基本设置”里能看到它的启用开关。
 3. 看日志：`<游戏目录>/ModData/BiliVpet/Log/<LogTitle>/` 是插件自己的日志，`Log/Main/` 是宿主日志，插件没加载出来时看这里的“加载外部插件...失败”。
 4. 没有真实直播时，可以在设置窗口里启用插件、检查设置页和存档；事件逻辑要么开播测试，要么在自己的单元测试里直接 `new EventBus(...)` 发布事件验证。

@@ -8,7 +8,7 @@
 - 已安装 VPet 和 [B站直播助手 mod](https://steamcommunity.com/sharedfiles/filedetails/?id=3356069105)，并且 mod 能正常登录直播间。
 - 本仓库的副本：`git clone https://github.com/YIYuNCU/VPET.Plugin.BiliBiliTest.Interface.git`。
 
-mod 目录指包含 `info.lps` 和 `plugin` 文件夹的那一层，下文的 `SubPlugins` 文件夹放在这一层。
+子插件放在 VPet 的 MOD 存储目录下：`<游戏主目录>/ModData/BiliVpet/SubPlugins/`。在 mod 设置窗口“基本设置”页点“打开子插件文件夹”按钮可以直接打开它（不存在时会自动创建）。
 
 ## 1. 新建工程
 
@@ -102,12 +102,12 @@ namespace HelloPet
 dotnet build -c Release
 ```
 
-在 mod 目录下新建 `SubPlugins/HelloPet/` 文件夹，把输出目录里的 `HelloPet.dll`（和 `HelloPet.pdb`，报错时能看到行号）复制进去。输出目录里应该只有自己的文件，如果出现了 `VPET.Plugin.BiliBiliTest.Interface.dll`、`LinePutScript.dll` 之类，说明 `Private` 或 `CopyLocalLockFileAssemblies` 没配对，不要复制它们。
+在 `SubPlugins` 下新建 `HelloPet` 文件夹，把输出目录里的 `HelloPet.dll`（和 `HelloPet.pdb`，报错时能看到行号）复制进去。输出目录里应该只有自己的文件，如果出现了 `VPET.Plugin.BiliBiliTest.Interface.dll`、`LinePutScript.dll` 之类，说明 `Private` 或 `CopyLocalLockFileAssemblies` 没配对，不要复制它们。
 
 ```
-<mod 目录>/
-  info.lps
-  plugin/
+<游戏主目录>/ModData/BiliVpet/
+  Configs/
+  Data/
   SubPlugins/
     HelloPet/
       HelloPet.dll
@@ -177,7 +177,7 @@ public sealed class HelloPlugin : BiliPluginBase, IPluginSettings
 
 ## 分享给别人
 
-把 `SubPlugins/HelloPet/` 整个文件夹打成 zip。使用者解压到自己 mod 目录的 `SubPlugins` 下，重启桌宠即可。发布前：
+把 `SubPlugins/HelloPet/` 整个文件夹打成 zip。使用者解压到自己的 `ModData/BiliVpet/SubPlugins` 下（设置窗口里有按钮可以打开该文件夹），重启桌宠即可。发布前：
 
 1. 确认文件夹里没有接口程序集、`LinePutScript`、VPet 的 dll。
 2. 在 README 里写清楚依赖的接口版本（见 [CHANGELOG.md](../CHANGELOG.md)）和已知限制。
